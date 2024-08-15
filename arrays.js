@@ -1,46 +1,46 @@
 
 
-// let fruits = ['Apple', 'Banana', 'Mango']
-// let morefruits = ['jam', 'Strawberry' ];
-// morefruits.unshift("kiwi")
-// fruits.shift();
+let fruits = ['Apple', 'Banana', 'Mango']
+let morefruits = ['jam', 'Strawberry' ];
+morefruits.unshift("kiwi")
+fruits.shift();
 
-// fruits.push("APPLE");
+fruits.push("APPLE");
 
-// let allfruits = fruits.concat(morefruits);
+let allfruits = fruits.concat(morefruits);
 
 
-// console.log("First list Fruits Array: " + fruits)
-// console.log("Second list of fruits: " + morefruits)
-// console.log ("Combined arrays: " + allfruits
-// )
+console.log("First list Fruits Array: " + fruits)
+console.log("Second list of fruits: " + morefruits)
+console.log ("Combined arrays: " + allfruits
+)
 
-// console.log(allfruits.length);
+console.log(allfruits.length);
 
 
 // reference Array 
-// let fruits = ['Apple', 'Banana', 'Mango']
-// let morefruits = fruits;
-// morefruits.push("carrot")
+let fruits = ['Apple', 'Banana', 'Mango']
+let morefruits = fruits;
+morefruits.push("carrot")
 
 
-// fruits.forEach(function(item, index){
-//     console.log(index, item, index) ;
+fruits.forEach(function(item, index){
+    console.log(index, item, index) ;
 
-// })
+})
 
-// console.log("Fruits Array: " + fruits);
-// console.log(morefruits)
+console.log("Fruits Array: " + fruits);
+console.log(morefruits)
 
-//objects 
+objects 
 
-// const person = {
-//     name: "Abul",
-//     tweets: 20,
-//     Age: 25
+const person = {
+    name: "Abul",
+    tweets: 20,
+    Age: 25
 
 
-// };
+};
 
 
 

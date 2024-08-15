@@ -83,12 +83,12 @@ const message = [
 //FILTER
 // it filters out specific length you specififed 
 
-const shortSearched = message.filter(function(video){
+// const shortSearched = message.filter(function(video){
 
-    // this will return all the string that is less than 6
-    return video.length < 10;
-})
+//     // this will return all the string that is less than 6
+//     return video.length < 10;
+// })
 
-console.log(shortSearched);
+// console.log(shortSearched);
 
 

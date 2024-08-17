@@ -122,11 +122,13 @@ const games = [
 
 //turnary operation 
 
-const shorter = videos.map(function(m){
+// const shorter = videos.map(function(m){
 
-    //basically checking if m.length is less than 9 if so retun m or retun "nope"
-    return m.length<9? m : "nope";
-})
+//     //basically checking if m.length is less than 9 if so retun m or retun "nope"
+//     return m.length<9? m : "nope";
+// })
 
-console.log(shorter)
+// console.log(shorter)
+
+
 

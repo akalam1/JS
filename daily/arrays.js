@@ -92,21 +92,21 @@
 // console.log(shortSearched);
 
 
-const videos = [
+// const videos = [
 
-    "Prak gone wrong ",
-    "JavaScript",
-    "html basics ",
-    "java",
-    "Sping Boot"
-]
+//     "Prak gone wrong ",
+//     "JavaScript",
+//     "html basics ",
+//     "java",
+//     "Sping Boot"
+// ]
 
-const games = [
-    {title: "Cricket", rating: 9.1},
-    {title: "Soccer", rating: 8.7},
-    {title: "Vollybal", rating: 10},
-    {title: "tennis ", rating: 7.2}
-]
+// const games = [
+//     {title: "Cricket", rating: 9.1},
+//     {title: "Soccer", rating: 8.7},
+//     {title: "Vollybal", rating: 10},
+//     {title: "tennis ", rating: 7.2}
+// ]
 
 //lets map it and find certain ratig 
 
@@ -129,6 +129,46 @@ const games = [
 // })
 
 // console.log(shorter)
+//Arrow Functionnn
+
+// const arrowVideos = videos.map(video => video.toUpperCase());
+
+// const arrowVideos = videos.map(video => {
+//     if(video.length<7){
+
+//     return video;
+// }else{
+//     return "nope";
+// }
+// });
+
+// console.log(arrowVideos);
+
+
+//SORT
+
+const items = ['banana', 'Apple','Mnago','Strawberry','orange'];
+const ratings = ['10','2','4','1','8','3'];
+
+
+//whne it comes to sortting, you can use onoy SORT funtion to sort string only 
+//such as items.sort()
+// but for integer you gotta do the a-b function 
+
+// ratings.sort((a,b) => a-b);
+// console.log(ratings)
+
+
+
+//COPIES without reference 
+
+
+const copyOfitem = [...ratings];
+
+copyOfitem.sort((a,b ) => a -b);
+
+console.log("Not sorted: "+ ratings)
+console.log("Sorted: " + copyOfitem)
 
 
 

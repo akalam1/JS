@@ -147,8 +147,8 @@
 
 //SORT
 
-const items = ['banana', 'Apple','Mnago','Strawberry','orange'];
-const ratings = ['10','2','4','1','8','3'];
+// const items = ['banana', 'Apple','Mnago','Strawberry','orange'];
+// const ratings = ['10','2','4','1','8','3'];
 
 
 //whne it comes to sortting, you can use onoy SORT funtion to sort string only 

@@ -171,22 +171,43 @@
 // console.log("Sorted: " + copyOfitem)
 
 
-// constractor functions 
+// // constractor functions 
 
-function tofo (name, completed ){
-    this.name = name;
-    this.completed = completed;
+// function tofo (name, completed ){
+//     this.name = name;
+//     this.completed = completed;
 
+// }
+
+// //get name 
+
+// tofo.prototype.getTodoName = function(){
+//     console.log(this.name);
+// }
+
+// const todo = new tofo("Abul", false);
+// const todo2 = new tofo("kalam", true);
+// tofo.getTodoName();
+// console.log(todo, todo2);
+
+//classes
+
+class Enemy{
+    constructor (life,name,level){
+        this.life = life;
+        this.name= name;
+        this.level = level;
+    }
+
+    getinfo(){
+
+        console.log( this.life,
+            this.name,
+            this.level);
+
+    }
 }
+const tiger = new Enemy(98, 'howard', 10);
+console.log(tiger);
 
-//get name 
-
-tofo.prototype.getTodoName = function(){
-    console.log(this.name);
-}
-
-const todo = new tofo("Abul", false);
-const todo2 = new tofo("kalam", true);
-tofo.getTodoName();
-console.log(todo, todo2);
-
+tiger.getinfo();

@@ -97,7 +97,23 @@ i,svg{
     cursor: pointer;
     margin-top: 3rem;
   }
-  /* select {
+  select {
     padding: 1rem;
     font-size: 1rem;
-  } */
+  }
+
+/* this for the pads which jumps or stays active for few sec till plays and moves 
+to next */
+
+@keyframes playTrack {
+  from{
+    transform: scale(1);
+  }
+  to{
+    transform: scale(1.2);
+  }
+  
+}
+
+
+

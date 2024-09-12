@@ -11,7 +11,7 @@ class DrumpKit{
         this.kickAudio = document.querySelector(".kick-sound");
         this.kickAudio = document.querySelector(".snare-sound");
         this.kickAudio = document.querySelector(".hihat-sound");
-        this.bpm=30;
+        this.bpm=130;
 //counter
         this.index = 1;
 
@@ -26,13 +26,32 @@ this.classList.toggle("active");    }
         // what this reminder does it, the number remains same till it hists 
         //8, once 8, the remider becomes 0, and it start over again
         let steps = this.index % 8;
-        console.log("The answer is: "+steps)
+        // console.log("The answer is: "+steps)
 
         // now lets use this method grab all the this.pads, such as b0,1,2,3..
 
         const activeBars = document.querySelectorAll(`.b${steps}`)
+// lets loop over each pads 
 
-        console.log(activeBars);
+activeBars.forEach(bar=>{
+    bar.style.animation= `playTrack 0.3s alternate ease-in-out 2`;
+
+    //check if the bar is active then play the svongs 
+
+    if (bar.classList.contains('active')){
+        //check which group bar is active to play specific song for each track
+        if (bar.classList.contains('kick-pad')){
+            this.kickAudio.play();
+        }
+        if (bar.classList.contains('snare-pad')){
+            this.snareAudio.play();
+        }
+        if (bar.classList.contains('hihat-pad')){
+            this.hihatAudio.play();
+        }
+    }
+})
+        // console.log(activeBars);
         this.index++;
     }
 
@@ -60,6 +79,9 @@ const drumpkit = new DrumpKit();
 
 drumpkit.pads.forEach(pad=> {
     pad.addEventListener('click', drumpkit.activePad);
+    pad.addEventListener('animationend', function(){
+        this.style.animation = "";
+    })
 
 });
 

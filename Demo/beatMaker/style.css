@@ -102,6 +102,30 @@ i,svg{
     font-size: 1rem;
   }
 
+  .mute.active{
+    background-color: rgb(192, 188, 188);
+  }
+
+  .tempo {
+    margin: 3rem;
+    width: 30%;
+  }
+  .tempo-slider {
+    padding: 0.2rem;
+    -webkit-appearance: none;
+    margin: 1rem 0rem;
+    width: 100%;
+    position: relative;
+    background: rgb(88, 88, 88);
+    cursor: pointer;
+    border-radius: 1rem;
+  }
+  .tempo p {
+    font-size: 1.5rem;
+    margin: 2rem;
+    text-align: center;
+  }
+
 /* this for the pads which jumps or stays active for few sec till plays and moves 
 to next */
 

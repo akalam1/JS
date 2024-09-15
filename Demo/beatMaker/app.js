@@ -192,6 +192,28 @@ if (e.target.classList.contains("active")){
     }       
     }
 
+    changeTempo(e){
+// basically using thi, we'll get temp number and and then update/display them accordingly to the bar
+
+const tempText = document.querySelector(".tempo-nr");
+this.bpm = e.target.value;
+// console.log(this.bpm)
+
+// updating tempo text
+tempText.innerText = e.target.value;
+    }
+
+    updateTemp(e){
+        this.bpm = e.target.value;
+        clearInterval(this.isPlaying);
+        this.isPlaying = null;
+        const playBtn = document.querySelector(".play");
+        if (playBtn.classList.contains("active")) {
+          this.start();
+        }
+
+    }
+
     }
 
 
@@ -241,5 +263,19 @@ drumpkit.muteButtons.forEach(muBtn=>{
         drumpkit.mutee(e);
     })
     // console.log(muBtn)
+
+})
+
+
+//for tempo
+
+drumpkit.tempSlider.addEventListener('input', function(e){
+
+    drumpkit.changeTempo(e);
+
+})
+drumpkit.tempSlider.addEventListener('change', function(e){
+
+    drumpkit.updateTemp(e);
 
 })

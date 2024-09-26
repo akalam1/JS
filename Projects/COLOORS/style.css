@@ -39,17 +39,17 @@ path,i,svg{
     display: flex;
     flex-direction: column;
     position: absolute;
-    opacity: 0;
+    /* opacity: 0; */
     bottom: 0%;
-    background: rgb(246, 245, 245);
+    background: rgb(123, 122, 122);
     /* opacity: 0; */
     padding: 1rem;
     width: 80%;
     border-top-right-radius: 1rem;
-    pointer-events: none;
+    /* pointer-events: none; */
     border-top-left-radius: 1rem;
      /* We are adding an adjustemnt class */
-    transform: translateY(100px);
+    /* transform: translateY(100px); */
     transition: all 0.5s ease-in-out;
   }
   .sliders.active {
@@ -117,4 +117,15 @@ font-weight: bold;
   background: none;
   cursor: pointer;
   margin: 2rem 0rem;
+}
+
+
+/* Slider Stuff */
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 1rem 0rem;
+  width: 100%;
+  position: relative;
+  border-radius: 1rem;
+  cursor: pointer;
 }

@@ -12,13 +12,72 @@ let initialColors;
 
 
 
+// for local storage 
+let savedPalettes = [];
+
+
 //event listener
 
-
+//generate colors 
+generateBtn.addEventListener("click", randomColors);
 //sdding event lister for sliders to change the color 
 sliders.forEach(slider=>{
     slider.addEventListener("input", hslControls );
 })
+
+//updare the hashid for h2
+colorDivs.forEach((div, index) =>{
+    div.addEventListener("change", ()=> {
+        updatetextUi(index);
+    });
+
+});
+
+//copy to clipboard 
+currentHexes.forEach(hex => {
+    hex.addEventListener('click', () => {
+        copyToClipboard(hex);
+    })
+})
+
+//remove popup
+popup.addEventListener("transitionend", ()=>{
+    const popupBox = popup.children[0];
+
+    popup.classList.remove("active");
+    popupBox.classList.remove("active");
+    
+})
+
+// adjust button for open controls panel 
+
+adjustButton.forEach((button,index) => {
+    button.addEventListener('click', ()=>{
+        openadjustmentPanel(index);
+    })
+})
+
+//close adjustment button
+closeAdjustments.forEach((button, index)=>{
+    button.addEventListener('click', ()=>{
+        closeadjustmentPanel(index);
+    })
+})
+
+
+// lockButton locking it 
+
+lockButton.forEach((button, index)=>{
+    button.addEventListener('click', e =>{
+        lockLayer(e,index);
+    })
+})
+
+
+
+
+
+
 
 //functions 
 //generate colors 
@@ -55,6 +114,8 @@ return hexColor;
 //looping over the color panels and adding background color and h2 text
 
 function randomColors(){
+//ceatinbg a empty array to save the color 
+    initialColors = [];
     colorDivs.forEach((div, index) => {
 
         /*From here, hextext getting the children of color div
@@ -66,6 +127,16 @@ function randomColors(){
         const hexText = div.children[0];
         const randomColor = generateHex();
         // console.log(div);
+
+// console.log(chroma(randomColor).hex());
+        //saving the generated hgex to an array
+        // initialColors.push(chroma(randomColor).hex());
+        if (div.classList.contains("locked")) {
+            initialColors.push(hexText.innerText);
+            return;
+          } else {
+            initialColors.push(chroma(randomColor).hex());
+          }
 
             //Add the color to the bg
 
@@ -95,7 +166,15 @@ function randomColors(){
     colorizeSliders(color,hue, brightnerss, saturation);
 
 
-    })
+    });
+
+    resetInputs();
+
+      //Check For Button Contrast
+  adjustButton.forEach((button, index) => {
+    checkContrast(initialColors[index], button);
+    checkContrast(initialColors[index], lockButton[index]);
+  });
 
 }
 
@@ -176,8 +255,10 @@ function hslControls(e){
     const saturation = sliders[2];
 
 
-    const bgColor = colorDivs[index].querySelector("h2").innerText;
-console.log(bgColor);
+    // const bgColor = colorDivs[index].querySelector("h2").innerText;
+    //passing the saved array color values we stored earlier 
+    const bgColor = initialColors[index];
+// console.log(bgColor);
 
 let color = chroma(bgColor)
 
@@ -186,10 +267,349 @@ let color = chroma(bgColor)
 .set("hsl.h", hue.value);
 colorDivs[index].style.backgroundColor = color;
 
+
+//colorized input/sliders update 
+
+colorizeSliders(color, hue, brightness, saturation);
 }
 
-//Calling the functions 
 
+//updating textUI
+function updatetextUi(index){
+/// this getting the index of each color div whneever we clikc on each div, it pulls the whole div
+    const activeDiv = colorDivs[index];
+    // console.log( activeDiv);
+// this getting the background color of the deiv that was set by chroma
+    const color = chroma(activeDiv.style.backgroundColor);
+    // console.log(color)
+
+    //this getting h2 tag
+    const textHex = activeDiv.querySelector("h2");
+    // console.log(textHex);
+    const icons = activeDiv.querySelectorAll(".controls button");
+    // console.log(icons);
+
+    //seeting the h2 tag to represet chroma hash# andf add it to dynamically whenevr we slides
+    textHex.innerText = color.hex();
+
+    //update contrast
+    checkContrast(color, textHex);
+//update icons as well
+
+for (icon of icons){
+    checkContrast(color, icon);
+}
+}
+
+
+function resetInputs(){
+
+    // this gets all the input tag of sliders 
+    const sliders = document.querySelectorAll(".sliders input");
+    // console.log(sliders);
+
+    sliders.forEach(slider =>{
+        // console.log(slider);
+        if (slider.name === "hue"){
+            const hueColor = initialColors[slider.getAttribute("data-hue")];
+            // console.log(hueColor)
+            const hueValue = chroma(hueColor).hsl()[0];
+            // console.log(hueValue);
+            slider.value = Math.floor(hueValue);
+        }
+        if (slider.name === "brightness") {
+            const brightColor = initialColors[slider.getAttribute("data-bright")];
+            const brightValue = chroma(brightColor).hsl()[2];
+            slider.value = Math.floor(brightValue * 100) / 100;
+          }
+
+       
+        if (slider.name === "saturation"){
+            const satColor = initialColors[slider.getAttribute("data-sat")];
+            // console.log(hueColor)
+            const satValue = chroma(satColor).hsl()[1];
+            // console.log(hueValue);
+            slider.value = Math.floor(satValue * 100) / 100;
+        }
+        
+    });
+
+    }
+
+
+    //copy to clipbiard texts
+
+   function  copyToClipboard(hex){
+
+/**
+ * what this function does is basically it copies and paste texts 
+ * fisrt we create a empty text area to save the hex 
+ * then use "select " and execCommand to copy the text and then ofc paste 
+ */
+    //creating a text area to save copied h2 and then pasting it
+    const el = document.createElement("textarea");
+    el.value = hex.innerText;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+
+document.body.removeChild(el);
+
+  //Pop up animation
+  const popupBox = popup.children[0];
+  popup.classList.add("active");
+  popupBox.classList.add("active");
+
+
+
+   }
+
+   //open adjustment panle
+
+   function openadjustmentPanel(index){
+//this will make the panel active once clided on toggle button
+    sliderContainers[index].classList.toggle("active");
+
+   }
+
+   //close panle by pressing x 
+
+   function closeadjustmentPanel(index){
+    //this will make the panel active once clided on toggle button
+        sliderContainers[index].classList.remove("active");
+    
+       }
+
+
+       //locking the lock
+
+       function lockLayer(e, index) {
+        const lockSVG = e.target.children[0];
+        const activeBg = colorDivs[index];
+        activeBg.classList.toggle("locked");
+      
+        if (lockSVG.classList.contains("fa-lock-open")) {
+          e.target.innerHTML = '<i class="fas fa-lock"></i>';
+        } else {
+          e.target.innerHTML = '<i class="fas fa-lock-open"></i>';
+        }
+      }
+
+
+
+
+      // save to pallet and LOCAL STORAGE 
+      //getting the actual save button
+      const saveBtn = document.querySelector(".save");
+      const submitSave = document.querySelector(".submit-save");
+      const closeSave = document.querySelector(".close-save");
+      const saveContainer = document.querySelector(".save-container");
+      const saveInput = document.querySelector(".save-container input");
+      const libraryContainer = document.querySelector(".library-container");
+      const libraryBtn = document.querySelector(".library");
+      const closeLibraryBtn = document.querySelector(".close-library");
+
+
+//event listener 
+saveBtn.addEventListener('click', openPalette);
+closeSave.addEventListener("click", closePalette);
+submitSave.addEventListener("click", savePalette);
+libraryBtn.addEventListener('click', openLibrary )
+closeLibraryBtn.addEventListener('click',  closeLibrary)
+
+
+function openPalette(e){
+    const popup = saveContainer.children[0];
+    saveContainer.classList.add("active");
+    popup.classList.add("active");
+}
+
+function closePalette(e){
+    const popup = saveContainer.children[0];
+    saveContainer.classList.remove("active");
+    popup.classList.add("active");
+}
+
+//saving colors pallet
+function savePalette(e) {
+    saveContainer.classList.remove("active");
+    popup.classList.remove("active");
+    const name = saveInput.value;
+    const colors = [];
+    currentHexes.forEach(hex => {
+      colors.push(hex.innerText);
+    });
+
+    let paletteNr =  savedPalettes.length;
+
+    // let paletteNr;
+    // const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
+    // if (paletteObjects) {
+    //   paletteNr = paletteObjects.length;
+    // } else {
+    //   paletteNr = savedPalettes.length;
+    // }
+
+
+
+    const paletteObj = {name, colors, nr:paletteNr};
+    savedPalettes.push(paletteObj);
+
+    // console.log( savedPalettes)
+    //save to local
+
+    savetoLocal(paletteObj)
+    saveInput.value = "";
+
+    //generating a liberary of clors after saving it 
+    const palette = document.createElement('div');
+    palette.classList.add("custom-palette");
+    const title = document.createElement("h4");
+    title.innerText = paletteObj.name;
+
+    // console.log(paletteObj.name)
+    const preview = document.createElement("div");
+    preview.classList.add("small-preview");
+    paletteObj.colors.forEach(smallColor=>{
+        const smallDiv = document.createElement("div");
+        smallDiv.style.backgroundColor = smallColor;
+        preview.appendChild(smallDiv);   
+    });
+
+    const paletteBtn = document.createElement('button');
+    paletteBtn.classList.add('pick-palette-btn');
+    paletteBtn.classList.add(paletteObj.nr);
+    paletteBtn.innerText = "Select";
+
+    //coping the colors from teh saved liberary and then  pasting ot the main colors div
+
+    paletteBtn.addEventListener("click", e =>{
+        closeLibrary();
+        const paletteIndex = e.target.classList[1];
+        // console.log(paletteIndex);
+
+        initialColors = [];
+        savedPalettes[paletteIndex].colors.forEach((color,index)=>{
+            initialColors.push(color);
+            colorDivs[index].style.backgroundColor = color;
+            const text = colorDivs[index].children[0];
+
+            checkContrast(color, text);
+            updatetextUi(index);
+        })
+
+        resetInputs();
+    })
+
+    //append to library
+
+palette.appendChild(title);
+palette.appendChild(preview);
+palette.appendChild(paletteBtn);
+
+//append to the main libraray
+libraryContainer.children[0].appendChild(palette);
+
+
+
+
+}
+
+function savetoLocal (paletteObj){
+  let  localpalettes;
+    if (localStorage.getItem("palettes") === null){
+        localpalettes = [];
+    }else{
+        localpalettes = JSON.parse(localStorage.getItem("palettes"));
+    }
+
+    localpalettes.push(paletteObj);
+    localStorage.setItem("palettes", JSON.stringify(localpalettes));
+
+}
+
+function openLibrary(){
+    const popup = libraryContainer.children[0];
+    libraryContainer.classList.add('active');
+    popup.classList.add('active')
+}
+function closeLibrary(){
+    const popup = libraryContainer.children[0];
+    libraryContainer.classList.remove('active');
+    popup.classList.remove('active')
+}
+
+
+
+
+
+// getting saved libarary from local 
+function getLocal(){
+    if (localStorage.getItem("palettes") === null){
+        localpalettes = [];
+
+    }else{
+        const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
+        paletteObjects.forEach(paletteObj =>{
+
+                //generating a liberary of clors after saving it 
+    const palette = document.createElement('div');
+    palette.classList.add("custom-palette");
+    const title = document.createElement("h4");
+    title.innerText = paletteObj.name;
+
+    // console.log(paletteObj.name)
+    const preview = document.createElement("div");
+    preview.classList.add("small-preview");
+    paletteObj.colors.forEach(smallColor=>{
+        const smallDiv = document.createElement("div");
+        smallDiv.style.backgroundColor = smallColor;
+        preview.appendChild(smallDiv);   
+    });
+
+    const paletteBtn = document.createElement('button');
+    paletteBtn.classList.add('pick-palette-btn');
+    paletteBtn.classList.add(paletteObj.nr);
+    paletteBtn.innerText = "Select";
+
+    //coping the colors from teh saved liberary and then  pasting ot the main colors div
+
+    paletteBtn.addEventListener("click", e =>{
+        closeLibrary();
+        const paletteIndex = e.target.classList[1];
+        // console.log(paletteIndex);
+
+        initialColors = [];
+        paletteObj[paletteIndex].colors.forEach((color,index)=>{
+            initialColors.push(color);
+            colorDivs[index].style.backgroundColor = color;
+            const text = colorDivs[index].children[0];
+
+            checkContrast(color, text);
+            updatetextUi(index);
+        })
+
+        resetInputs();
+    })
+
+    //append to library
+
+palette.appendChild(title);
+palette.appendChild(preview);
+palette.appendChild(paletteBtn);
+
+//append to the main libraray
+libraryContainer.children[0].appendChild(palette);
+            
+
+        })
+    }
+}
+
+// localStorage.clear();
+
+
+getLocal()
 
 randomColors();
 let getHash = generateHex();

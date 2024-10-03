@@ -8,7 +8,7 @@ const adjustButton = document.querySelectorAll(".adjust");
 const lockButton = document.querySelectorAll(".lock");
 const closeAdjustments = document.querySelectorAll(".close-adjustment");
 const sliderContainers = document.querySelectorAll(".sliders");
-let initialColors;
+// let initialColors;
 
 
 

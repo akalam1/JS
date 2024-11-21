@@ -8,8 +8,12 @@ body{
     background: #17181a;
   font-family: "Montserrat", sans-serif;
   overflow-x: hidden;
-  /* position: relative; */
+  position: relative;
   
+}
+
+main{
+  position: absolute;
 }
 
 #logo {
@@ -18,6 +22,7 @@ body{
   }
 
   .nav-header{
+    position: relative;
     min-height: 10vh;
     font-size: 1rem;
     display: flex;
@@ -26,7 +31,8 @@ body{
     color: white;
   width: 80%;
   margin: auto;
-  padding: 2rem 0;;
+  padding: 2rem 0;
+  z-index: 2;
 
 
   }
@@ -173,7 +179,7 @@ body{
   height: 150%;
   background: black;
   left: 0;
-  top: 0;
+  top: -15%;
 
 }
 .cursor {
@@ -182,9 +188,240 @@ body{
   border: 2px solid white;
   border-radius: 50%;
   position: absolute;
-  /* transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
   transition: all 0.4s ease-in-out;
   transition-property: background, transform;
   transform-origin: 75% 75%;
-  pointer-events: none; */
 }
+
+  /* 
+
+  transform-origin: 75% 75%;
+}
+  */
+
+  .cursor.nav-active {
+    background: rgb(86, 124, 228);
+    transform: scale(2.5);
+    border: 1px solid white;
+  }
+  .cursor.explore-active {
+    background: white;
+    transform: scale(2.5);
+  }
+  
+  .cursor-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 0.9rem;
+    transform: translate(-50%, -50%);
+  }
+  .title {
+    position: relative;
+    overflow: hidden;
+  }
+  
+.title-swipe {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  mix-blend-mode: darken;
+  transform: translateY(100%);
+
+}
+.t-swipe1 {
+  background: rgb(86, 124, 228);
+}
+.t-swipe2 {
+  background: rgb(167, 110, 231);
+}
+.t-swipe3 {
+  background: rgb(255, 139, 93);
+}
+
+
+.scroLLmagic-pin-space{
+  position: static !important;
+}
+
+body.hide {
+  overflow: hidden;
+}
+
+
+/* //fashion page  */
+
+.fashion1,
+.fashion2,
+.fashion3 {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  margin: auto;
+  color: white;
+  margin-top: 5rem;
+  flex-wrap: wrap;
+  position: relative;
+
+ 
+}
+
+.fashion-img {
+  height: 70vh;
+  flex-basis: 30rem;
+}
+.fashion-text {
+ 
+
+  flex: 1;
+  position: relative;
+  flex-basis: 25rem;
+
+
+}
+.fashion-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.fashion-text h1 {
+  font-size: 6rem;
+  padding: 5rem 0rem;
+}
+.fashion1 h1 {
+  color: rgb(255, 139, 93);
+}
+.fashion2 h1 {
+  color: rgb(167, 110, 231);
+}
+
+.fashion3 h1 {
+  color: rgb(86, 124, 228);
+}
+
+.fashion-text p {
+  font-size: 2rem;
+  padding: 2rem 2rem 0rem 0rem;
+  margin-bottom: 10rem;
+}
+
+.fashion-nr {
+  font-size: 15rem;
+  position: absolute;
+  left:50% ;
+  box-orient: 10%;
+  color:white ;
+  opacity: .2;
+}
+
+.swipe {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.swipe1 {
+  background: rgb(167, 110, 231);
+  z-index: 5;
+}
+
+.swipe2 {
+  background: rgb(86, 124, 228);
+  z-index: 4;
+}
+
+.swipe3 {
+  background: rgb(255, 139, 93);
+  z-index: 3;
+}
+
+
+@media screen and (max-width: 1024px) {
+  main {
+    width: 100%;
+    margin: 0;
+  }
+
+  .slide {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-desc {
+    padding: 0;
+  }
+
+  .hero-img {
+    padding-top: 4rem;
+  }
+
+  .hero-desc h2 {
+    font-size: 1.6rem;
+    padding: 1rem 0rem;
+  }
+
+  .hero-desc p {
+    padding: 2rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    text-align: center;
+  }
+
+  .explore {
+    width: 60%;
+    margin: auto;
+  }
+
+  .detail-slide {
+    width: 100%;
+    text-align: center;
+  }
+
+  .fashion-text p {
+    margin-bottom: 5rem;
+    padding: 0;
+  }
+
+  .fashion-text h1 {
+    margin: 2rem 0rem;
+  }
+
+  .fashion-nr {
+    font-size: 8rem;
+  }
+
+  .nav-bar {
+    display: block;
+  }
+
+  .nav-link {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .contact h2 {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .contact p {
+    font-size: 1.2rem;
+    padding: 1rem;
+    text-align: center;
+  }
+}
+
+
+
